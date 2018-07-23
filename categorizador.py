@@ -88,7 +88,6 @@ class Categorizador:
         nova_noticia = ''
         with open('escreva-aqui-a-noticia.txt', 'r', encoding="utf8") as f:
             nova_noticia = f.read()
-        #u = unicodedata.normalize('NFKD', nova_noticia).encode('ascii','ignore')
         return nova_noticia    
             
     def previsao(tk_para_prever):
@@ -108,12 +107,10 @@ class Categorizador:
         for tk in tk_para_prever:
             match = [s for s in tokens_politica if tk in s]
             if match:
-                #print('palavra conhecida: ', tk)
                 score_politica += 1
             else:
-                #print('palavra desconhecida: ', tk)
                 if any(tk in s for s in unknown_words_tk1):
-                    break;
+                    continue;
                 else:
                     unknown_words_tk1.append(tk)
                     
@@ -126,7 +123,7 @@ class Categorizador:
             else:
                 #print('palavra desconhecida: ', tk)
               if any(tk in s for s in unknown_words_tk2):
-                    break;
+                    continue;
               else:
                   unknown_words_tk2.append(tk)
         
@@ -139,7 +136,7 @@ class Categorizador:
             else:
                 #print('palavra desconhecida: ', tk)
               if any(tk in s for s in unknown_words_tk3):
-                    break;
+                    continue;
               else:
                   unknown_words_tk3.append(tk)
 
@@ -160,10 +157,7 @@ class Categorizador:
         percent_politica = (len(tokens_politica)/100) * scores[0]/100        
         percent_esporte = (len(tokens_esporte)/100) * scores[1]/100
         percent_tecnologia = (len(tokens_tecnologia)/100) * scores[2]/100
-        
-#        ordenadas = sorted([int(percent_politica), int(percent_esporte), int(percent_tecnologia)], reverse=True)
-#        inteiros = sorted([int(percent_politica), int(percent_esporte), int(percent_tecnologia)], reverse=True)
-        
+            
         dictp = {'politica': percent_politica, 'esporte': percent_esporte, 'tecnologia': percent_tecnologia}
         
         porcentagens_ordenadas = sorted(dictp, key=dictp.get, reverse=True)
@@ -190,6 +184,7 @@ class Categorizador:
         if score_esporte < score_politica > score_tecnologia:
             tokens_novas_palavras = Categorizador.tokenizer(novas_palavras[0])
             print('\nTotal de palavras novas -> ', len(tokens_novas_palavras))
+            print('\nNovas palavras aprendidas de POLITICA: ', tokens_novas_palavras)
             for tk in tokens_novas_palavras:
                 tokens_politica.append(tk)
             if len(tokens_novas_palavras) > 0:
@@ -197,6 +192,7 @@ class Categorizador:
         elif score_politica < score_esporte > score_tecnologia:
             tokens_novas_palavras = Categorizador.tokenizer(novas_palavras[1])
             print('\nTotal de palavras novas -> ', len(tokens_novas_palavras))
+            print('\nNovas palavras aprendidas de ESPORTE: ', tokens_novas_palavras)
             for tk in tokens_novas_palavras:
                 tokens_esporte.append(tk)
             if len(tokens_novas_palavras) > 0:
@@ -204,6 +200,7 @@ class Categorizador:
         elif score_esporte < score_tecnologia > score_politica:
             tokens_novas_palavras = Categorizador.tokenizer(novas_palavras[2])
             print('\nTotal de palavras novas -> ', len(tokens_novas_palavras))
+            print('\nNovas palavras aprendidas de TECNOLOGIA: ', tokens_novas_palavras)
             for tk in tokens_novas_palavras:
                 tokens_tecnologia.append(tk)
             if len(tokens_novas_palavras) > 0:

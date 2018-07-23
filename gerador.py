@@ -20,8 +20,6 @@ conteudo_politica = Categorizador.busca_conteudo(url_politica, [])
 conteudo_esporte = Categorizador.busca_conteudo(url_esporte, []) 
 conteudo_tecnologia = Categorizador.busca_conteudo(url_tecnologia, []) 
 
-print(conteudo_politica)
-
 print('\n [2 de 3] - Gerando vocabulário')
 # Gerar vocabulário de tokens para cada categoria
 tokens_politica = Categorizador.tokenizer(conteudo_politica)

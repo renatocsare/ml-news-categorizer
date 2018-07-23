@@ -22,5 +22,4 @@ scores, novas_palavras = Categorizador.previsao(tk_nova_noticia)
 Categorizador.calcular_porcentagem(scores)
 
 # Aprender as palavras novas
-Categorizador.aprender(novas_palavras, scores)
-    
+Categorizador.aprender(novas_palavras, scores)    
